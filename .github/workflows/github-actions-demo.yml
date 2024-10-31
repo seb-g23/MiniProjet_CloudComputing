@@ -1,0 +1,35 @@
+name: GitHub Actions Demo
+
+on:
+  push:
+    branches:
+      - main  
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Vérifier le dépôt
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      # Configurer Node.js avec la version utilisée pour le développement
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      # Installer les dépendances
+      - name: Install dependencies
+        run: npm install
+
+      # Compiler l'application
+      - name: Build the application
+        run: npm run build  
+
+      # Exécuter les tests unitaires
+      - name: Run unit tests
+        run: npm test
+        env:
+          CI: true  
