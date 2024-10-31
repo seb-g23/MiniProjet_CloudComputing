@@ -32,6 +32,7 @@ jobs:
           docker tag myapp:${{ github.sha }} mydockerhubuser/myapp:latest
           docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository }}/myapp:latest
 
+
       - name: Push Docker image to Docker Hub
         run: |
           docker push mydockerhubuser/myapp:latest
