@@ -1,4 +1,5 @@
 name: Docker Build and Publish
+
 on:
   push:
     branches:
@@ -23,7 +24,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}
+          password: ${{ secrets.GHCR_TOKEN }}  # Assurez-vous que ce secret est configuré
 
       - name: Build Docker image
         run: |
