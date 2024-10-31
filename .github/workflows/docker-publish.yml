@@ -1,5 +1,4 @@
 name: Docker Build and Publish
-
 on:
   push:
     branches:
@@ -24,21 +23,21 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_TOKEN }}  # Assurez-vous que ce secret est configuré
+          password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build Docker image
         run: |
-          docker build -t myapp:${{ github.sha }} .
+          docker build -t myapp:${{ github.sha }} . || { echo "Docker build failed"; exit 1; }
 
       - name: Tag Docker images
         run: |
-          docker tag myapp:${{ github.sha }} mydockerhubuser/myapp:latest
-          docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository }}/myapp:latest
+          docker tag myapp:${{ github.sha }} mydockerhubuser/myapp:latest || { echo "Tagging failed"; exit 1; }
+          docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository }}/myapp:latest || { echo "Tagging failed"; exit 1; }
 
       - name: Push Docker image to Docker Hub
         run: |
-          docker push mydockerhubuser/myapp:latest
+          docker push mydockerhubuser/myapp:latest || { echo "Push to Docker Hub failed"; exit 1; }
 
       - name: Push Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/${{ github.repository }}/myapp:latest
+          docker push ghcr.io/${{ github.repository }}/myapp:latest || { echo "Push to GHCR failed"; exit 1; }
