@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 # fly.toml app configuration file generated for miniprojet-cloudcomputing on 2024-11-07T10:58:30Z
+=======
+# fly.toml app configuration file generated for sebastien-sysinfo-app on 2024-11-10T12:09:11+01:00
+>>>>>>> 2bd1e09 (Votre message de commit)
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
+<<<<<<< HEAD
 app = 'miniprojet-cloudcomputing'
+=======
+app = 'sebastien-sysinfo-app'
+>>>>>>> 2bd1e09 (Votre message de commit)
 primary_region = 'cdg'
 
 [build]
@@ -20,4 +28,7 @@ primary_region = 'cdg'
   memory = '1gb'
   cpu_kind = 'shared'
   cpus = 1
+<<<<<<< HEAD
   memory_mb = 1024
+=======
+>>>>>>> 2bd1e09 (Votre message de commit)
