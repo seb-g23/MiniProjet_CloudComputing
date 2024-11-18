@@ -31,10 +31,11 @@ jobs:
         run: |
           docker build -t myapp:${{ github.sha }} . || { echo "Docker build failed"; exit 1; }
 
-      - name: Tag Docker images
-        run: |
+     - name: Tag Docker images
+       run: |
           docker tag myapp:${{ github.sha }} mydockerhubuser/myapp:latest || { echo "Tagging failed"; exit 1; }
-          docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository }}/myapp:latest || { echo "Tagging failed"; exit 1; }
+          docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository_owner | toLower }}/mini_projet_cloudcomputing/myapp:latest || { echo "Tagging failed"; exit 1; }
+
       # Publication de l’image sur Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
