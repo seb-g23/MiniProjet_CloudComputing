@@ -7,37 +7,42 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
+      #Récupérer le code du dépôt
       - name: Check out repository code
         uses: actions/checkout@v4
       
-      # Connexion à Docker Hub
+      #Connexion à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      # Connexion au GitHub Container Registry
+      
+      #Connexion au GitHub Container Registry (GHCR)
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_TOKEN }}
-      # Construction de l’image du Docker
+      
+      #Construction de l'image Docker
       - name: Build Docker image
         run: |
           docker build -t myapp:${{ github.sha }} . || { echo "Docker build failed"; exit 1; }
+      
+      #Taguer les images Docker avec des noms valides
       - name: Tag Docker images
         run: |
           docker tag myapp:${{ github.sha }} sebg23/myapp:latest || { echo "Tagging failed"; exit 1; }
           docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/mini_projet_cloudcomputing/myapp:latest || { echo "Tagging failed"; exit 1; }
-
-      # Publication de l’image sur Docker Hub
+      
+      #Publier l'image sur Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
           docker push sebg23/myapp:latest || { echo "Push to Docker Hub failed"; exit 1; }
-
-      # Publication de l’image sur GHCR 
+      
+      #Publier l'image sur GitHub Container Registry (GHCR)
       - name: Push Docker image to GitHub Container Registry
         run: |
-          docker push ghcr.io/${{ github.repository }}/myapp:latest || { echo "Push to GHCR failed"; exit 1; }
+          docker push ghcr.io/${{ github.repository_owner }}/mini_projet_cloudcomputing/myapp:latest || { echo "Push to GHCR failed"; exit 1; }
