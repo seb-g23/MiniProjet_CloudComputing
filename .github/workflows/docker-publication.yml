@@ -29,13 +29,13 @@ jobs:
           docker build -t myapp:${{ github.sha }} . || { echo "Docker build failed"; exit 1; }
       - name: Tag Docker images
         run: |
-          docker tag myapp:${{ github.sha }} mydockerhubuser/myapp:latest || { echo "Tagging failed"; exit 1; }
+          docker tag myapp:${{ github.sha }} sebg23/myapp:latest || { echo "Tagging failed"; exit 1; }
           docker tag myapp:${{ github.sha }} ghcr.io/${{ github.repository_owner }}/mini_projet_cloudcomputing/myapp:latest || { echo "Tagging failed"; exit 1; }
-          
+
       # Publication de l’image sur Docker Hub
       - name: Push Docker image to Docker Hub
         run: |
-          docker push mydockerhubuser/myapp:latest || { echo "Push to Docker Hub failed"; exit 1; }
+          docker push sebg23/myapp:latest || { echo "Push to Docker Hub failed"; exit 1; }
 
       # Publication de l’image sur GHCR 
       - name: Push Docker image to GitHub Container Registry
